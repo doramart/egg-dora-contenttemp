@@ -44,8 +44,7 @@ exports.doraContentTemp = {
     initData: 'contenttemplates.json', // 初始化数据脚本
     pluginsConfig: ` 
     exports.doraContentTemp = {\n
-        enable: true,\n
-        \n
+        enable: true,\n        package: 'egg-dora-contenttemp',
     };\n
     `, // 插入到 plugins.js 中的配置
     defaultConfig: `
