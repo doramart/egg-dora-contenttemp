@@ -2,7 +2,7 @@
  * @Author: doramart 
  * @Date: 2019-09-23 14:44:21 
  * @Last Modified by: doramart
- * @Last Modified time: 2019-09-24 18:22:06
+ * @Last Modified time: 2019-11-13 16:20:33
  */
 
 const _ = require('lodash');
@@ -76,7 +76,7 @@ let ContentTemplateController = {
         }
     },
 
-    _setTempData(ctx, app,targetTemp) {
+    _setTempData(ctx, app, targetTemp) {
         let tempTree = [];
         // tempTree.push({
         //     id: 'i18n',
@@ -226,8 +226,6 @@ let ContentTemplateController = {
 
     async updateFileInfo(ctx, app) {
 
-
-
         let fields = ctx.request.body || {};
         let fileContent = fields.code;
         let filePath = fields.path;
@@ -259,6 +257,69 @@ let ContentTemplateController = {
         }
 
     },
+
+    async createInvoice(ctx, app) {
+
+
+        try {
+
+            let targetId = ctx.request.body.tempId;
+            let singleUserToken = ctx.request.body.singleUserToken;
+
+            if (!targetId || !singleUserToken) {
+                throw new Error(ctx.__('validate_error_params'));
+            }
+
+            let invoiceData = {
+                singleUserToken,
+                itemId: targetId,
+                type: '1'
+            }
+            let hostUrl = ctx.request.header.host;
+            if (hostUrl && hostUrl.indexOf('localhost') < 0 &&
+                hostUrl.indexOf('127.0.0.1') < 0) {
+                invoiceData.siteDomain = hostUrl;
+            }
+            let askCreateInvoiceUrl = `${app.config.doracms_api}/api/alipaySystem/createInvoice`
+            let createInvoiceResult = await ctx.helper.reqJsonData(askCreateInvoiceUrl, invoiceData, 'post');
+
+            ctx.helper.renderSuccess(ctx, {
+                data: createInvoiceResult
+            });
+
+        } catch (err) {
+            ctx.helper.renderFail(ctx, {
+                message: err
+            });
+        }
+    },
+
+    async checkInvoice(ctx, app) {
+
+        try {
+
+            let noInvoice = ctx.request.body.noInvoice;
+            let singleUserToken = ctx.request.body.singleUserToken;
+
+            if (!noInvoice) {
+                throw new Error(ctx.__('validate_error_params'));
+            }
+
+            let checkInviceState = await ctx.helper.reqJsonData(app.config.doracms_api + '/api/alipaySystem/checkInvoice', {
+                noInvoice,
+                singleUserToken
+            }, 'post');
+
+            ctx.helper.renderSuccess(ctx, {
+                data: checkInviceState
+            });
+
+        } catch (err) {
+            ctx.helper.renderFail(ctx, {
+                message: err
+            });
+        }
+    }
 
 }
 
