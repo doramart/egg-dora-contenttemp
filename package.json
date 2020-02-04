@@ -1,6 +1,6 @@
 {
   "name": "egg-dora-contenttemp",
-  "version": "1.0.2",
+  "version": "1.0.8",
   "description": "contentTemplate",
   "eggPlugin": {
     "name": "doraContentTemp"
@@ -53,7 +53,7 @@
     "url": "git+https://github.com/doramart/egg-dora-contenttemp.git"
   },
   "bugs": {
-    "url": "https://github.com/doramart/egg/issues"
+    "url": "https://github.com/doramart/egg-dora-contenttemp/issues"
   },
   "homepage": "https://github.com/doramart/egg-dora-contenttemp#readme",
   "author": "doramart",
