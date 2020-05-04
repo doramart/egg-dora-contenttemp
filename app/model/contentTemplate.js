@@ -17,7 +17,9 @@ module.exports = app => {
             type: String,
             default: "defaultTemp"
         }, //别名 指向模板文件夹
-        version: String,
+        version: [{
+            type: String,
+        }], // 适用版本
         items: [{
             type: String,
             ref: 'TemplateItems'
