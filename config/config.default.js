@@ -17,7 +17,7 @@ exports.doraContentTemp = {
     isindex: 0, // 是否需要前台访问，1：需要，0：不需要,入口地址:'/ext/devteam/index/index'
     version: pkgInfo.version, // 版本号
     iconName: 'icon_compile', // 主菜单图标名称
-    adminUrl: 'https://cdn.html-js.cn/cms/plugins/static/admin/contentTemp/js/app.js',
+    adminUrl: '/contentTemp/js/app.js',
     adminApi: [{
         url: 'template/getTemplateForderList',
         method: 'get',
@@ -33,6 +33,18 @@ exports.doraContentTemp = {
         method: 'post',
         controllerName: 'updateFileInfo',
         details: '更新文件内容',
+    }, {
+        url: 'template/createInvoice',
+        method: 'post',
+        controllerName: 'createInvoice',
+        details: '预创建支付订单',
+        noPower: true
+    }, {
+        url: 'template/checkInvoice',
+        method: 'post',
+        controllerName: 'checkInvoice',
+        details: '订单校验',
+        noPower: true
     }],
     fontApi: [{
         url: 'contentTemplate/getDefaultTempInfo',
@@ -44,8 +56,7 @@ exports.doraContentTemp = {
     initData: 'contenttemplates.json', // 初始化数据脚本
     pluginsConfig: ` 
     exports.doraContentTemp = {\n
-        enable: true,\n
-        \n
+        enable: true,\n        package: 'egg-dora-contenttemp',
     };\n
     `, // 插入到 plugins.js 中的配置
     defaultConfig: `
